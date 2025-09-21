@@ -81,7 +81,7 @@ public class UnidadeController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ResponseErrorDTO.class)))
             })
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<PageResponseDTO<UnidadeDTO>> buscarUnidadeFiltro(
             @Parameter(description = "Número inicial da página.", example = "0") Integer page,
             @Parameter(description = "Qtde de páginas.", example = "10") Integer size,
@@ -97,6 +97,36 @@ public class UnidadeController {
                 data.getSize());
 
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Obter unidade.", description = "Unidades",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Unidade"),
+                    @ApiResponse(
+                            responseCode = "204",
+                            description = "unidade empty returned",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad Request",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ResponseErrorDTO.class))),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ResponseErrorDTO.class)))
+            })
+    @GetMapping("/{unidadeId}")
+    public ResponseEntity<UnidadeDTO> buscarUnidade(
+            @PathVariable("unidadeId") @Parameter(description = "Id da unidade.", example = "1") Integer unidadeId) {
+
+        var data = service.buscarUnidadePeloId(unidadeId);
+        return ResponseEntity.ok(data);
     }
 
     @Operation(summary = "Atualizar unidade", description = "Unidades",
@@ -190,12 +220,11 @@ public class UnidadeController {
                                     schema = @Schema(implementation = ResponseErrorDTO.class)))
             })
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{unidadeId}")
     public ResponseEntity<Void> removeBank(
-            @PathVariable("id") @Parameter(description = "Id do Banco.", example = "1") Integer id) {
+            @PathVariable("unidadeId") @Parameter(description = "Id da unidade.", example = "1") Integer unidadeId) {
 
-        service.deletar(id);
+        service.deletar(unidadeId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 }

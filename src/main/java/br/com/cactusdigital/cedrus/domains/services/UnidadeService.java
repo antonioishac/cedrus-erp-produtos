@@ -14,6 +14,7 @@ public interface UnidadeService {
     UnidadeDTO salvar(UnidadeRequest request);
     void verificaSeExiste(String sigla);
     Page<UnidadeDTO> buscar(UnidadeFiltro filtro, int page, int size);
+    UnidadeDTO buscarUnidadePeloId(Integer id);
     UnidadeDTO atualizar(Integer id, UnidadeRequest request);
     UnidadeDTO atualizarParcial(Integer id, Map<String, Object> campos, HttpServletRequest request);
     UnidadeEntity existeUnidade(Integer id);

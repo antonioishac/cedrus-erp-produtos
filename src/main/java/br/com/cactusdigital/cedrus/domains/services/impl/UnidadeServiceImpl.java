@@ -69,6 +69,12 @@ public class UnidadeServiceImpl implements UnidadeService {
     }
 
     @Override
+    public UnidadeDTO buscarUnidadePeloId(Integer id) {
+        var result = existeUnidade(id);
+        return mapper.toDto(result);
+    }
+
+    @Override
     public UnidadeDTO atualizar(Integer id, UnidadeRequest request) {
         var unidadeAtual = existeUnidade(id);
         validarUnidadeAntesUpdate(request.sigla(), unidadeAtual.getId(), repository);
