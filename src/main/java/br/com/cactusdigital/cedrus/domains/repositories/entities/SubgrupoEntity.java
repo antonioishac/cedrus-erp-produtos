@@ -3,6 +3,7 @@ package br.com.cactusdigital.cedrus.domains.repositories.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -16,7 +17,10 @@ public class SubgrupoEntity {
     @Column(name = "ID")
     private Integer id;
 
-    private Integer grupo;
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "ID_PRODUTO_GRUPO")
+    private GrupoEntity grupo;
 
     @Column(name = "NOME", length = 100)
     private String nome;
